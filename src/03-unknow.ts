@@ -22,3 +22,4 @@ const parse = (str: string) : unknown => {
     return JSON.parse(str);
 }
 
+console.log(unknowVar);

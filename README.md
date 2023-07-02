@@ -71,3 +71,62 @@ También podemos emplear unknown en funciones si no sabemos exactamente que nos 
     const parse = (str: string): unknown => {
         return JSON.parse(str)
     }
+
+
+## Never Type
+
+El never type se usa para funciones que nunca van a terminar o que detienen el programa. Con esto TypeScript nos ayuda a detectarlos como por ejemplo un ciclo infinito cuando lanzamos un mensaje de error.
+
+#### Never type en funciones infinitas
+
+En el siguiente código, TypeScript infiere que el tipo es never, ya que su ejecución será infinita.
+
+    const withoutEnd = () => {
+        while (true) {
+            console.log('Nunca parar de aprender');
+        }
+    }
+
+#### Never vs. Void
+
+Las funciones del tipo void son aquellas que no retornan ningún dato, simplemente ejecutan las instrucciones dentro del bloque de la función. Por tanto, no debemos confundirlas con las de tipo never:
+
+    const voidFunc = () => {
+    for(let i = 1; i <= 5; i++){
+        console.log(i)
+    }
+    }
+
+    voidFunc()
+
+    /*
+    // Función infinita y de tipo Never 👇
+    const neverFunc = () => {
+        while (true) {
+            console.log('Nunca parar de aprender');
+        }
+    }
+    */
+
+#### Never type en código con errores
+
+Una función también puede ser del tipo never cuando tenemos un throw que lance un error y, como resultado, haga detener la ejecución.
+
+    const fail = (message: string) => { // TypeScript infiere que esta función se de tipo `never`
+    throw new Error(message)
+    }
+
+    const example = (input:unknown) => {
+    if(typeof input === 'string'){
+        return 'Es un string';
+    }
+    else if (Array.isArray(input)){
+        return 'Es un array';
+    }
+    return fail('Not Match'); // Lanzamos un error
+    }
+
+    console.log(example('Hola')) //'Es un string'
+    console.log(example([1,1,1,1])) // 'Es un array'
+    console.log(example(1212)) // error: Uncaught Error: Not Match
+    console.log(example('Hola después del fail')) // NUNCA SE EJECUTA, porque se lanzó un error previamente
