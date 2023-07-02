@@ -28,10 +28,46 @@ Las definimos indicando entre [] el tipo de dato que cada elemento tendrá en la
 
 Al definir el tipado de cada uno también estamos definiendo la cantidad de valores que tendrá la tupla, por tanto, no podemos agregar más elementos.
 
-#### Desestructuracion
+### Desestructuracion
 
 Podemos aplicar desestructuración para asignar a ciertas variables respectivamente los valores dentro de una tupla.
 
     const user: [string, number] = ['Alexis', 34];
     const [username, age] = user;
     console.log(username);
+
+#### Unknown type
+
+El unknown type nos indica que una variable es de un tipo de dato desconocido. Es similar a any, pero sin quitar el análisis de código estático que nos brinda TypeScript.
+
+El tipo unknown nos fuerza a hacer una verificación de tipo. Esta es la forma que TypeScript sugiere trabajar con variables de las cuales no sabemos de qué tipo serán. Así evitamos utilizar constantemente any.
+
+#### Unknown type en TypeScript
+
+Usamos el keyword unknown para declarar una variable de este tipo.
+
+    let unknownVar: unknown;
+
+#### Unknown vs. Any
+
+Con any podemos hacer lo que queramos, no hay restricción alguna, pero con unknown vamos a tener advertencias al momento de utilizar alguna función o método con variables de este tipo.
+
+    let unknownVar: unknown;
+
+    unknownVar.toUpperCase(); // Nos marcará el editor una advertencia
+
+Por ejemplo, no podemos directamente aplicar un método propio de un string a una variable unknown. Para ello debemos realizar una verificación de tipo para asegurarnos que se ejecutará dicho método siempre cuando unknownVar sea del tipo string en algún punto del programa:
+
+    let unknownVar: unknown;
+
+    if (unknownVar === 'string') {
+        unknownVar.toUpperCase(); // Ahora ya no nos marcará como error.
+    }
+
+#### Unknown en funciones
+
+También podemos emplear unknown en funciones si no sabemos exactamente que nos va a devolver.
+
+    const parse = (str: string): unknown => {
+        return JSON.parse(str)
+    }
