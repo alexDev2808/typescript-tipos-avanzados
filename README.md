@@ -1,6 +1,6 @@
 # TypeScript Tipos Avanzados
 
-### Enum
+## Enum
 
 Un enum es un tipo de dato que nos permite crear un set de opciones. Estas opciones son almacenadas bajo una estructura llave-valor similar a un objeto.
 Enums en TypeScript
@@ -14,7 +14,7 @@ Veamos algunos aspectos de los enums en TypeScript:
 La ventaja que nos da esto es que disponemos de una lista de valores predeterminados que podemos asignar a una variable o a un atributo de la misma. Por tanto, no podemos asignar otro valor que no este dentro de las opciones que nos brinde el enum
 
 
-### Tuplas 
+## Tuplas 
 
 Las tuplas o tuples nos permiten crear un array fuertemente tipado especificando el tipo de dato de cada elemento, así como una cantidad definida de elementos que podrá almacenar.
 
@@ -28,7 +28,7 @@ Las definimos indicando entre [] el tipo de dato que cada elemento tendrá en la
 
 Al definir el tipado de cada uno también estamos definiendo la cantidad de valores que tendrá la tupla, por tanto, no podemos agregar más elementos.
 
-### Desestructuracion
+#### Desestructuracion
 
 Podemos aplicar desestructuración para asignar a ciertas variables respectivamente los valores dentro de una tupla.
 
@@ -36,7 +36,7 @@ Podemos aplicar desestructuración para asignar a ciertas variables respectivame
     const [username, age] = user;
     console.log(username);
 
-#### Unknown type
+## Unknown type
 
 El unknown type nos indica que una variable es de un tipo de dato desconocido. Es similar a any, pero sin quitar el análisis de código estático que nos brinda TypeScript.
 
