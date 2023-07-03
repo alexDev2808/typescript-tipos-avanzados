@@ -130,3 +130,100 @@ Una función también puede ser del tipo never cuando tenemos un throw que lance
     console.log(example([1,1,1,1])) // 'Es un array'
     console.log(example(1212)) // error: Uncaught Error: Not Match
     console.log(example('Hola después del fail')) // NUNCA SE EJECUTA, porque se lanzó un error previamente
+
+
+## Parámetros opcionales y nullish-coalescing
+
+Los parámetros opcionales son aquellos que podemos obviar su envío cuando mandamos datos en una función que requiere argumentos.
+
+El nullish-coalescing nos permite evaluar si una variable está definida, pero si esta es null o undefined, retorna un segundo valor diferente.
+
+#### Parámetros opcionales en TypeScript
+
+Para denotar que un parámetro será opcional usamos el operador ? al lado. Siempre debemos colocar los parámetros opcionales al final.
+
+    const createProduct = (
+        id: string | number, // Puede ser de tipo `string` o `number`.
+        isNew: boolean,
+        stock?: number, // PARÁMETRO OPCIONAL.
+    ) => {
+        return { // Retornamos un objeto con los valores pasados como parámetros.
+            id,
+            stock,
+            isNew
+        }
+    }
+
+    console.log(
+        createProduct(1, true)
+    ) // { id: 1, stock: undefined, isNew: true }
+
+#### Valores por defecto con el operador OR
+
+Para evitar tener como retorno valores undefined podríamos emplear el operador lógico || (OR) para asignar un valor por defecto.
+
+    const createProduct = (
+        id: string | number, // Puede ser de tipo `string` o `number`.
+        isNew?: boolean,	// PARÁMETRO OPCINAL.
+        stock?: number, // PARÁMETRO OPCINAL.
+    ) => {
+        return { // Retornamos un objeto con los valores pasados como parámetros.
+            id,
+            stock: stock || 10,
+            isNew
+        }
+    }
+
+    console.log(
+        createProduct(1, true)
+    ) // { id: 1, stock: undefined, isNew: true }
+
+#### El problema de usar valores falsy en JavaScript
+
+El operador || evalúa si el primer valor es falsy, de serlo retorna un segundo valor, si no es falsy retorna el primero. Los valores que son considerados falsy en JavaScript son:
+
+- String vacío “”;
+- Número 0;
+- El valor booleano false;
+
+Aquí surge un problema: si nosotros deseáramos mandar como argumento un valor que JavaScript considera falsy, entonces el operador || no tomará en cuenta nuestros valores y los cambiará por los de defecto:
+
+    const createProduct = (
+        id: string | number, // Puede ser de tipo `string` o `number`.
+        isNew?: boolean,	// PARÁMETRO OPCINAL.
+        stock?: number, // PARÁMETRO OPCINAL.
+    ) => {
+        return { // Retornamos un objeto con los valores pasados como parámetros.
+            id,
+            stock: stock || 10,
+            isNew: isNew || true
+        }
+    }
+
+    console.log(
+        createProduct(1, false, 0)
+    ) // { id: 1, stock: 10, isNew: true }
+    // 👆 JavaScript retorna los valores por defecto de `isNew` y `stock`
+    //		y no los que mandamos en los argumentos.
+
+Este problema podemos solucionarlo con el nullish-coalescing.
+
+#### Nullish-coalescing para asignar valores por defecto
+
+El nullish-coalescing se representa con el operador ??. Esto evalúa si el primer valor está definido, si no lo está, retorna el segundo:
+
+    const createProduct = (
+        id: string | number, // Puede ser de tipo `string` o `number`.
+        isNew?: boolean,	// PARÁMETRO OPCINAL.
+        stock?: number, // PARÁMETRO OPCINAL.
+    ) => {
+        return { // Retornamos un objeto con los valores pasados como parámetros.
+            id,
+            stock: stock ?? 10,
+            isNew: isNew ?? true
+        }
+    }
+
+    console.log(
+        createProduct(1, false, 0)
+    ) // { id: 1, stock: 0, isNew: false }
