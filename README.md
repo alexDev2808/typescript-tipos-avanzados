@@ -397,3 +397,43 @@ Finalmente, ya podríamos utilizar los métodos según el tipo de dato de la res
     const rtaStr = parseStr(['N','i','c','o']); // Salida: string
     rtaStr.toLowerCase(); // ✅ Ya podemos acceder a los métodos de un string 
     console.log('rtaStr', "['N','i','c','o'] =>",rtaStr);
+
+## Interfaces 
+
+Las interfaces nos permiten crear moldes de objetos con sus respectivas propiedades y tipado. Para generar interfaces usamos la palabra reservada interface.
+
+    interface Product {
+        id: number | string;
+        title: string;
+        price: number;
+        stock: number;
+    }
+
+Si bien podemos hacerlo mismo con type:
+
+    type Product = {
+    id: number | string;
+    title: string;
+    price: number;
+    stock: number;
+    }
+
+Existen algunas diferencias que hacen a interface una mejor opción para definir objetos.
+Interfaces vs. Type
+
+#### Veamos la diferencia entre usar interface y type:
+
+Utilizamos type para definir principalmente tipos primitivos o directos (declaraciones cortas y puntuales), mientras que con una interface definimos una estructura llave-valor de propiedades que describan lo que debe tener un objeto.
+
+    type Sizes = 'S' | 'M' | 'L' | 'XL';
+
+    interface Product {
+        id: number | string;
+        title: string;
+        price: number;
+        stock: number;
+        size?: Sizes;
+    }
+
+Los interface se pueden fácilmente extender (realizar herencia), mientras que con los type no. Esto los hace más escalables.
+
