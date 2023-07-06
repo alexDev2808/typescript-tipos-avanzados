@@ -437,3 +437,95 @@ Utilizamos type para definir principalmente tipos primitivos o directos (declara
 
 Los interface se pueden fácilmente extender (realizar herencia), mientras que con los type no. Esto los hace más escalables.
 
+
+## Estructuras complejas
+
+En TypeScript, puedes combinar los enums, types e interfaces de varias formas para crear estructuras de datos complejas y precisas.
+
+#### Enums en interfaces
+
+Podríamos asociar el tipado de una de las propiedades de un interface con un enum:
+
+    enum Color {
+    Negro,
+    Blanco,
+    Morado
+    }
+
+    interface FiguraGeometrica {
+    nombre: string;
+    color: Color;
+    }
+
+    const rectangulo: FiguraGeometrica = {
+    nombre: "rectángulo",
+    color: Color.Morado
+    };
+
+#### Types en Interfaces
+
+En los atributos de un interface podríamos usar un type para dar un tipado customizable:
+
+    type Coordenadas = [number, number];
+
+    interface Punto {
+    ubicacion: Coordenadas;
+    etiqueta: string;
+    }
+
+    const punto: Punto = {
+    ubicacion: [10, 5],
+    etiqueta: "Punto A"
+    };
+
+#### Combinación de Enums y Types
+
+En TypeScript, también es posible juntar los enums y types. Por ejemplo, podemos declarar un type que tenga la estructura de objeto en el que una de sus propiedades es un valor del set de opciones perteneciente a un enum:
+
+    enum Size {
+    Chico = "S",
+    Mediano = "M",
+    Grande = "L"
+    }
+
+    type Producto = {
+    name: string;
+    size: Size; // 👈 Enum
+    };
+
+    const camiseta: Producto = {
+    name: "Camiseta",
+    size: Size.Mediano
+    };
+
+#### Interfaces, enums y types juntos
+
+Es posible usar enums y types dentro de un interface para crear una sola estructura compleja para poder generar objetos con información más detallada y precisa:
+
+    enum TipoVehiculo {
+    Automóvil,
+    Motocicleta
+    }
+
+    type Especificaciones = {
+    marca: string;
+    modelo: string;
+    año: number;
+    };
+
+    interface Vehiculo {
+    tipo: TipoVehiculo; // 👈 Enum
+    especificaciones: Especificaciones; // 👈 Type
+    }
+
+    // Objeto
+    const vehiculo: Vehiculo = {
+    tipo: TipoVehiculo.Automóvil,
+    especificaciones: {
+        marca: "Toyota",
+        modelo: "Corolla",
+        año: 2020
+    }
+    };
+
+Al combinar estas estructuras, tienes la capacidad de producir estructuras de datos más complejas y establecer tipos más detallados para tus objetos y variables. Esto da como resultado un código más claro, seguro y fácil de mantener.
